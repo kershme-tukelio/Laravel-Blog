@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreatePostRequest;
 
 class PostsController extends Controller
 {
@@ -36,14 +37,15 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
         // $post = new Post;
         // $post->title = $request->title;
         // $post->content = $request->content;
         // $post->is_published = $request->get('is_published', false);
         // $post->save();
-        Post::create($request->only(['title', 'content', 'is_published']));
+        $data = $request->validated();
+        Post::create($data);
 
         return redirect('/');
     }
