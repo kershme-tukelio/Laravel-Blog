@@ -16,8 +16,9 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::published()->orderBy('id', 'desc')->get();
-        // $posts = DB::table('posts')->get();
+        $posts = Post::published()
+            ->orderBy('id', 'desc')
+            ->get();
 
         return view('posts.index', compact('posts'));
     }
