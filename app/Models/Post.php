@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
+    protected $fillable = ['title', 'content', 'is_published'];
 
     public static function published() {
         return self::where('is_published', true);
