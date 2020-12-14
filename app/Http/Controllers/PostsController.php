@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreatePostRequest;
+use App\Models\Comment;
 
 class PostsController extends Controller
 {

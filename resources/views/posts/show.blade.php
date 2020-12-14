@@ -7,4 +7,8 @@
     <p>
         {{$post->content}}
     </p>
+    <h3>Comments</h3>
+    @foreach ($post->comments as $comment)
+        <p>{{$comment->content}}</p>
+    @endforeach
 @endsection
