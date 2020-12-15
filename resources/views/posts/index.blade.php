@@ -7,7 +7,7 @@
     <ul>
         @foreach ($posts as $post)
             <li>
-                <a href="{{route('posts.single', ['id' => $post->id])}}">{{$post->title}} - ({{$post->comments->count()}})</a>
+                <a href="{{route('posts.show', ['id' => $post->id])}}">{{$post->title}} - ({{$post->comments->count()}})</a>
             </li>
         @endforeach
     </ul>
