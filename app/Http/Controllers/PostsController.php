@@ -41,11 +41,6 @@ class PostsController extends Controller
      */
     public function store(CreatePostRequest $request)
     {
-        // $post = new Post;
-        // $post->title = $request->title;
-        // $post->content = $request->content;
-        // $post->is_published = $request->get('is_published', false);
-        // $post->save();
         $data = $request->validated();
         Post::create($data);
 
