@@ -7,15 +7,18 @@ use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\AuthController;
 
 Route::get('/', [PostsController::class, 'index']);
-Route::get('/posts/store', [PostsController::class, 'store']);
+Route::get('/posts/store', [PostsController::class, 'store'])->middleware('auth');
 Route::get('/posts/{id}', [PostsController::class, 'show'])->name('posts.show');
-Route::post('/posts', [PostsController::class, 'show']);
-Route::post('/posts/{post}/comments', [CommentsController::class, 'store'])->name('comments.store');
-Route::get('/register', [AuthController::class, 'getRegistrationForm']);
-Route::post('/register', [AuthController::class, 'register']);
-Route::get('/login', [AuthController::class, 'getloginForm']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/posts', [PostsController::class, 'show'])->middleware('auth');
+Route::post('/posts/{post}/comments', [CommentsController::class, 'store'])->name('comments.store')->middleware('auth');
+
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/register', [AuthController::class, 'getRegistrationForm']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/login', [AuthController::class, 'getloginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+});
 
 Route::get('/profile', function () {
     return auth()->user();
