@@ -39,7 +39,10 @@ class CommentsController extends Controller
     {
         $data = $request->validated();
         $post->createComment($request->content);
-        return redirect(route('posts.show', ['id' => $post->id]));
+
+        session(['message' => 'Success!']);
+        info(session('message'));
+        return redirect(route('posts.show', ['id' => $post->id]))->with('message', 'Success!');
     }
 
     /**

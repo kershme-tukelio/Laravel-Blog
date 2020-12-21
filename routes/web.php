@@ -10,7 +10,7 @@ Route::get('/', [PostsController::class, 'index']);
 Route::get('/posts/store', [PostsController::class, 'store'])->middleware('auth');
 Route::get('/posts/{id}', [PostsController::class, 'show'])->name('posts.show');
 Route::post('/posts', [PostsController::class, 'show'])->middleware('auth');
-Route::post('/posts/{post}/comments', [CommentsController::class, 'store'])->name('comments.store')->middleware('auth');
+Route::post('/posts/{post}/comments', [CommentsController::class, 'store'])->name('comments.store')->middleware('auth', 'age.check');
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [AuthController::class, 'getRegistrationForm']);
