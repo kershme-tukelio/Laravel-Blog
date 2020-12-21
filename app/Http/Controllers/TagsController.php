@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use App\Http\Requests\CreatePostRequest;
-use App\Models\Comment;
 
-class PostsController extends Controller
+class TagsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,14 +15,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::published()
-            ->with('tags')
-            ->orderBy('id', 'desc')
-            ->get();
-
-        info($posts);
-
-        return view('posts.index', compact('posts'));
+        //
     }
 
     /**
@@ -33,7 +25,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        //
     }
 
     /**
@@ -42,34 +34,31 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreatePostRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
-        Post::create($data);
+        Tag::create($request);
 
-        return redirect('/');
+        return redirect('/tags/add');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Tag $tag)
     {
-        $post = Post::with('tags')->findOrFail($id);
-
-        return view('posts.show', compact('post'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(Tag $tag)
     {
         //
     }
@@ -78,10 +67,10 @@ class PostsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Tag $tag)
     {
         //
     }
@@ -89,10 +78,10 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Tag $tag)
     {
         //
     }
