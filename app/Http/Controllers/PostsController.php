@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreatePostRequest;
 use App\Models\Comment;
+use App\Models\Tag;
 
 class PostsController extends Controller
 {
@@ -21,8 +22,6 @@ class PostsController extends Controller
             ->orderBy('id', 'desc')
             ->get();
 
-        info($posts);
-
         return view('posts.index', compact('posts'));
     }
 
@@ -33,7 +32,8 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $tags = Tag::all();
+        return view('posts.create', compact('tags'));
     }
 
     /**
@@ -44,8 +44,14 @@ class PostsController extends Controller
      */
     public function store(CreatePostRequest $request)
     {
+        info($request);
         $data = $request->validated();
-        Post::create($data);
+
+        info($data);
+        $post = auth()->user()->posts()->create($data);
+        
+        info($post);
+        $post->tags()->attach($request->tag_id);
 
         return redirect('/');
     }
@@ -58,6 +64,7 @@ class PostsController extends Controller
      */
     public function show($id)
     {
+        info($id);
         $post = Post::with('tags')->findOrFail($id);
 
         return view('posts.show', compact('post'));

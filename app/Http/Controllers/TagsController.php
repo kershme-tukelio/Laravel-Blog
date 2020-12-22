@@ -15,7 +15,13 @@ class TagsController extends Controller
      */
     public function index()
     {
-        //
+        $tags = Tag::with('posts')
+            ->orderBy('id', 'desc')
+            ->get();
+
+        info($tags);
+
+        return view('posts.index-tags', compact('tags'));
     }
 
     /**
@@ -36,9 +42,9 @@ class TagsController extends Controller
      */
     public function store(Request $request)
     {
-        Tag::create($request);
+        Tag::create(['name' => $request->name]);
 
-        return redirect('/tags/add');
+        return redirect('/tags');
     }
 
     /**
